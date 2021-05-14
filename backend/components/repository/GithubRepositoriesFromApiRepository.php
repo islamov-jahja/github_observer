@@ -21,11 +21,18 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
     }
 
     /**
+     * @param IGithubUserEntity|null $user
      * @return GithubRepos[]
-    */
-    public function getFor(IGithubUserEntity $user): array
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\httpclient\Exception
+     */
+    public function get(?IGithubUserEntity $user): array
     {
         $repositories = [];
+
+        if ($user === null){
+            return $repositories;
+        }
 
         $response = $this->client->baseUrl = $this->client
             ->createRequest()
@@ -45,5 +52,15 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
         }
 
         return $repositories;
+    }
+
+    public function save(IGithubRepositoryEntity $githubRepositoryEntity): bool
+    {
+        return false;
+    }
+
+    public function deleteAll(): bool
+    {
+        return false;
     }
 }

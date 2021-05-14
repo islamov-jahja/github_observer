@@ -1,7 +1,6 @@
 <?php
 
 namespace app\components\repository;
-use app\components\entities\GithubUserEntity;
 use app\components\entities\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubUserRepository;
 use app\models\GithubUser;
@@ -9,12 +8,12 @@ use app\models\GithubUser;
 class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
 {
 
-    public function add(IGithubUserEntity $githubUserEntity)
+    public function save(IGithubUserEntity $githubUserEntity): bool
     {
         $userInArray = $githubUserEntity->toArray();
         unset($userInArray['id']);
         $newUser = new GithubUser($userInArray);
-        $newUser->save();
+        return $newUser->save();
     }
 
     public function delete(int $id)
@@ -36,5 +35,10 @@ class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
         }
 
         return $query->exists();
+    }
+
+    public function getAll()
+    {
+        return GithubUser::find()->all();
     }
 }

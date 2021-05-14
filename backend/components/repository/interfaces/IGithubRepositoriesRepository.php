@@ -13,5 +13,7 @@ interface IGithubRepositoriesRepository
      * @param string $userName
      * @return IGithubRepositoryEntity[]
     */
-    public function getFor(IGithubUserEntity $user): array;
+    public function get(?IGithubUserEntity $user): array;
+    public function save(IGithubRepositoryEntity $githubRepositoryEntity): bool;
+    public function deleteAll(): bool;
 }
