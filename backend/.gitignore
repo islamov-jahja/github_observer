@@ -1,9 +1,3 @@
-assets/*
-!assets/.gitignore
-protected/runtime/*
-!protected/runtime/.gitignore
-protected/data/*.db
-themes/classic/views/
 # phpstorm project files
 .idea
 
@@ -19,20 +13,21 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-backend/vendor
+/vendor
 
 # composer itself is not needed
-backend/composer.phar
+composer.phar
 
 # Mac DS_Store Files
-backend/.DS_Store
+.DS_Store
 
 # phpunit itself is not needed
-backend/phpunit.phar
+phpunit.phar
 # local phpunit config
-backend/phpunit.xml
+/phpunit.xml
 
-backend/tests/_output/*
-backend/tests/_support/_generated
+tests/_output/*
+tests/_support/_generated
 
-backend/config
+#vagrant folder
+/.vagrant
