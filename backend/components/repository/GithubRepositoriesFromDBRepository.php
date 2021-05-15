@@ -37,4 +37,9 @@ class GithubRepositoriesFromDBRepository implements IGithubRepositoriesRepositor
         }
         return true;
     }
+
+    public function getAll()
+    {
+        return GithubRepos::find()->all();
+    }
 }

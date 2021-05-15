@@ -12,24 +12,32 @@ class m210513_223036_isert_user extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci';
+        }
+
         $this->createTable('github_user', [
             'id' => $this->primaryKey()->comment('Уникальный идентификатор пользователя'),
             'name' => $this->string()->notNull()->comment('имя пользотвателя')
-        ]);
+        ], $tableOptions);
 
         $this->createTable('github_repos', [
             'id' => $this->primaryKey()->comment('Уникальный идентификатор репозитория'),
             'github_user_id' => $this->integer()->comment('ссылка на пользователя'),
             'name' => $this->string()->comment('название репозитория'),
+            'link' => $this->string()->comment('Ссылка на репозиторий'),
             'updated_at' => $this->timestamp()->notNull()->comment('последняя дата обновления')
-        ]);
+        ], $tableOptions);
 
         $this->addForeignKey(
             'fk-github_repos-github_user',
             'github_repos',
             'github_user_id',
             'github_user',
-            'id'
+            'id',
+            'cascade',
+            'cascade'
         );
     }
 
@@ -38,9 +46,8 @@ class m210513_223036_isert_user extends Migration
      */
     public function safeDown()
     {
-        echo "m210513_223036_isert_user cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('github_repos');
+        $this->dropTable('github_user');
     }
 
     /*

@@ -10,7 +10,7 @@ use app\components\repository\interfaces\IGithubUserRepository;
 use app\enums\DateFormat;
 use app\models\GithubRepos;
 
-class IUpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand
+class UpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand
 {
     private GithubRepositoriesFromApiRepository $apiRepositoriesRepository;
     private GithubRepositoriesFromDBRepository $dbRepositoriesRepository;
@@ -35,17 +35,25 @@ class IUpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand
         $repositories = [];
 
         foreach ($users as $user) {
-            $repositories = array_merge($repositories, $this->apiRepositoriesRepository->get($user));
+            $newRepositories = $this->apiRepositoriesRepository->get($user);
+            if (!empty($newRepositories)) {
+                $repositories = array_merge($repositories, $newRepositories);
+            }
         }
         $this->dbRepositoriesRepository->deleteAll();
 
-        sort(
-            $repositories,
-            fn($a, $b) => strcmp($a->getUpdatedDateTime()->format(DateFormat::SERVER_DATE_FORMAT), $b->getUpdatedDateTime()->format(DateFormat::SERVER_DATE_FORMAT))
-        );
+        usort($repositories, function(GithubRepos $a, GithubRepos $b){
+            if ($a->getUpdatedDateTime() == $b->getUpdatedDateTime()) {
+                return 0;
+            }
+            return ($a->getUpdatedDateTime() < $b->getUpdatedDateTime()) ? 1 : -1;
+        });
 
-        for($i = 0; $i < 10; $i++){
-            $this->dbRepositoriesRepository->save($repositories[$i]);
+        if (!empty($repositories)) {
+            $countOfRepos = count($repositories) > 10 ? 10 : count($repositories);
+            for ($i = 0; $i < $countOfRepos; $i++) {
+                $this->dbRepositoriesRepository->save($repositories[$i]);
+            }
         }
     }
 }

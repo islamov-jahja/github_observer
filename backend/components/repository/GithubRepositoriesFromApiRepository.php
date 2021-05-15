@@ -34,19 +34,21 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
             return $repositories;
         }
 
-        $response = $this->client->baseUrl = $this->client
-            ->createRequest()
+        $url = self::GITHUB_API_URL. "/users/{$user->getName()}/repos";
+        $response = $this->client
+            ->get($url)
+            ->addHeaders(['User-Agent' => 'Personal-Computer'])
             ->setFormat(Client::FORMAT_JSON)
-            ->setUrl("users/{$user->getName()}/repos")
             ->send();
 
         foreach ($response->data as $item){
             $githubRepos = new GithubRepos([
                 'name' => $item['name'] ?? null,
                 'github_user_id' => $user->getId(),
+                'link' => $item['html_url']
             ]);
 
-            $githubRepos->setUpdateDateTime($item['updated_at']);
+            $githubRepos->setUpdateDateTime(new \DateTime($item['updated_at']));
 
             $repositories[] = $githubRepos;
         }
@@ -62,5 +64,10 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
     public function deleteAll(): bool
     {
         return false;
+    }
+
+    public function getAll()
+    {
+        return [];
     }
 }

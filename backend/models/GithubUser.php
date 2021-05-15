@@ -3,8 +3,8 @@
 namespace app\models;
 
 use app\components\entities\interfaces\IGithubUserEntity;
-use app\components\repository\interfaces\IGithubUserRepository;
-use Yii;
+use app\components\repository\GithubRepositoriesFromApiRepository;
+use yii\httpclient\Client;
 
 /**
  * This is the model class for table "github_user".
@@ -31,6 +31,25 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
     {
         return [
             [['name'], 'required'],
+            [['name'], 'unique', 'message' => 'Такой пользователь уже был добавлен'],
+            [['name'], function($attribute){
+            /**@var $client Client*/
+                $client = \Yii::$container->get(Client::className());
+
+                $url  = GithubRepositoriesFromApiRepository::GITHUB_API_URL . "/users/{$this->getName()}";
+                try {
+                    $response = $client
+                        ->get($url)
+                        ->addHeaders(['User-Agent' => 'My_computer', 'Authorization' => "token " .\Yii::$app->params['token']])
+                        ->send();
+
+                    if ($response->getStatusCode() != 200) {
+                        $this->addError($attribute, 'Данного пользователя Github не сущесвует');
+                    }
+                }catch (\Exception $exception){
+                    $this->addError($attribute, 'Некоррктные данные');
+                }
+            }],
             [['name'], 'string', 'max' => 255],
         ];
     }

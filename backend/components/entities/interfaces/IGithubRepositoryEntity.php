@@ -18,7 +18,12 @@ interface IGithubRepositoryEntity
     public function getGithubUserEntity(): IGithubUserEntity;
     public function setGithubUserEntity(IGithubUserEntity $githubUserRepository);
 
-    public function validate(): bool;
+    /**@return string*/
+    public function getLink(): string;
+
+    public function setLink(string $link);
+
+    public function validate();
     public function getErrors();
     public function toArray();
 }

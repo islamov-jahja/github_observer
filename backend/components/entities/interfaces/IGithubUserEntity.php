@@ -24,7 +24,7 @@ interface IGithubUserEntity
      */
     public function getRepositories(): array;
 
-    public function validate(): bool;
+    public function validate();
     public function getErrors();
     public function toArray();
 }

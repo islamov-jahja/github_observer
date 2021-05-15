@@ -15,5 +15,6 @@ interface IGithubRepositoriesRepository
     */
     public function get(?IGithubUserEntity $user): array;
     public function save(IGithubRepositoryEntity $githubRepositoryEntity): bool;
+    public function getAll();
     public function deleteAll(): bool;
 }

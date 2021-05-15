@@ -14,6 +14,7 @@ use Yii;
  * @property int $id Уникальный идентификатор репозитория
  * @property int|null $github_user_id ссылка на пользователя
  * @property string|null $name название репозитория
+ * @property string $link;
  * @property string $updated_at последняя дата обновления
  *
  * @property GithubUser $githubUser
@@ -21,15 +22,6 @@ use Yii;
 class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntity
 {
     public IUpdateRepositoryListCommand $updateRepositoryListCommand;
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        if ($this->updateRepositoryListCommand !== null){
-            $this->updateRepositoryListCommand->update();
-        }
-
-        parent::afterSave($insert, $changedAttributes);
-    }
 
     /**
      * {@inheritdoc}
@@ -47,7 +39,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return [
             [['github_user_id'], 'integer'],
             [['updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'link'], 'string', 'max' => 255],
             [['github_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => GithubUser::className(), 'targetAttribute' => ['github_user_id' => 'id']],
         ];
     }
@@ -62,6 +54,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
             'github_user_id' => 'Github User ID',
             'name' => 'Name',
             'updated_at' => 'Updated At',
+            'link' => 'Ссылка на репозиторий'
         ];
     }
 
@@ -77,7 +70,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
 
     public function getUpdatedDateTime(): \DateTime
     {
-        return new \DateTime($this->updated_at);
+        return \DateTime::createFromFormat(DateFormat::SERVER_DATE_FORMAT, $this->updated_at);
     }
 
     public function setUpdateDateTime(\DateTime $updatedDatetime)
@@ -113,5 +106,15 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
     public function setGithubUserEntity(IGithubUserEntity $githubUserRepository)
     {
         $this->githubUser = $githubUserRepository;
+    }
+
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link)
+    {
+        $this->link = $link;
     }
 }
