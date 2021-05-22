@@ -40,7 +40,8 @@ class UpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand
                 $repositories = array_merge($repositories, $newRepositories);
             }
         }
-        $this->dbRepositoriesRepository->deleteAll();
+
+        $transaction = \Yii::$app->db->beginTransaction();
 
         usort($repositories, function(GithubRepos $a, GithubRepos $b){
             if ($a->getUpdatedDateTime() == $b->getUpdatedDateTime()) {
@@ -49,11 +50,19 @@ class UpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand
             return ($a->getUpdatedDateTime() < $b->getUpdatedDateTime()) ? 1 : -1;
         });
 
+        $saved = true;
         if (!empty($repositories)) {
             $countOfRepos = count($repositories) > 10 ? 10 : count($repositories);
             for ($i = 0; $i < $countOfRepos; $i++) {
-                $this->dbRepositoriesRepository->save($repositories[$i]);
+                if (!$this->dbRepositoriesRepository->save($repositories[$i])){
+                    $saved = false;
+                    break;
+                }
             }
+
+            $this->dbRepositoriesRepository->deleteAll();
         }
+
+        !$saved ? $transaction->rollBack() : $transaction->commit();
     }
 }
