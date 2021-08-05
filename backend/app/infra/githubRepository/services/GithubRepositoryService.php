@@ -8,7 +8,7 @@ use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubReposito
 use app\components\repository\interfaces\IGithubRepositoriesRepository;
 use app\components\services\interfaces\IRepositoriesProcessor;
 
-class RepositoryProcessor implements IRepositoriesProcessor
+class GithubRepositoryService implements IRepositoriesProcessor
 {
     private IGithubRepositoriesRepository $githubRepositoriesRepository;
     public function __construct(IGithubRepositoriesRepository $githubRepositoriesRepository)

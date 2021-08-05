@@ -6,7 +6,7 @@ use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEnti
 use app\components\repository\interfaces\IGithubUserRepository;
 use app\components\services\interfaces\IGithubUserProcessor;
 
-class UserProcessor implements IGithubUserProcessor
+class GithubUserService implements IGithubUserProcessor
 {
     private IUpdateRepositoryListCommand $updateRepositoriesCommand;
     private IGithubUserRepository $userRepository;
