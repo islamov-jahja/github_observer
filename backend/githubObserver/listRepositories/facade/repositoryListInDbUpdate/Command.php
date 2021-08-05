@@ -7,7 +7,7 @@ use app\components\repository\GithubRepositoriesFromDBRepository;
 use app\components\repository\interfaces\IGithubUserRepository;
 use app\app\package\listRepositories\adapter\entity\GithubRepos;
 
-final class Handle
+final class Command
 {
 
     /** @var \app\components\repository\GithubRepositoriesFromApiRepository */
@@ -35,11 +35,11 @@ final class Handle
         $this->githubUserRepository = $githubUserRepository;
     }
 
-    public function handle(): void
+    public function __invoke(): void
     {
         $users = $this->githubUserRepository->getAll();
 
-        /**@var $repositories \app\app\package\listRepositories\adapter\entity\GithubRepos*/
+        /** @var $repositories \app\app\package\listRepositories\adapter\entity\GithubRepos[] */
         $repositories = [];
 
         foreach ($users as $user) {
