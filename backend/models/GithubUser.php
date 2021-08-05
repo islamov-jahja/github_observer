@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\GithubRepositoriesFromApiRepository;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;

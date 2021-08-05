@@ -2,7 +2,7 @@
 namespace app\components\commands;
 
 use app\components\commands\interfaces\IUpdateRepositoryListCommand;
-use app\components\entities\interfaces\IGithubRepositoryEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
 use app\components\repository\GithubRepositoriesFromApiRepository;
 use app\components\repository\GithubRepositoriesFromDBRepository;
 use app\components\repository\interfaces\IGithubRepositoriesRepository;

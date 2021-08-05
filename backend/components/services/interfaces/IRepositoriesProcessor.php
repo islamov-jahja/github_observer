@@ -4,7 +4,7 @@
 namespace app\components\services\interfaces;
 
 
-use app\components\entities\interfaces\IGithubRepositoryEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
 
 interface IRepositoriesProcessor
 {

@@ -2,7 +2,7 @@
 
 namespace app\components\repository\interfaces;
 
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 
 interface IGithubUserRepository
 {

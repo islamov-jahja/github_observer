@@ -1,7 +1,7 @@
 <?php
 
 namespace app\components\repository;
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubUserRepository;
 use app\models\GithubUser;
 

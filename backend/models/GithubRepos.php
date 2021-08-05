@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use app\components\entities\interfaces\IGithubRepositoryEntity;
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\enums\DateFormat;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;

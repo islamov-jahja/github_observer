@@ -2,7 +2,7 @@
 
 namespace app\components\services;
 use app\components\commands\interfaces\IUpdateRepositoryListCommand;
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubUserRepository;
 use app\components\services\interfaces\IGithubUserProcessor;
 

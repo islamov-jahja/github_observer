@@ -4,8 +4,8 @@
 namespace app\components\repository;
 
 
-use app\components\entities\interfaces\IGithubRepositoryEntity;
-use app\components\entities\interfaces\IGithubUserEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
+use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubRepositoriesRepository;
 use app\models\GithubRepos;
 

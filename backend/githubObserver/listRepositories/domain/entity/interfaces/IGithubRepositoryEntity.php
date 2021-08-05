@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components\entities\interfaces;
+namespace app\githubObserver\listRepositories\domain\entity\interfaces;
 
 interface IGithubRepositoryEntity
 {
@@ -36,12 +36,12 @@ interface IGithubRepositoryEntity
     public function setName(string $name): void;
 
     /**
-     * @return \app\components\entities\interfaces\IGithubUserEntity
+     * @return \app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity
      */
     public function getGithubUserEntity(): IGithubUserEntity;
 
     /**
-     * @param  \app\components\entities\interfaces\IGithubUserEntity  $githubUserRepository
+     * @param  \app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity  $githubUserRepository
      */
     public function setGithubUserEntity(IGithubUserEntity $githubUserRepository): void;
 

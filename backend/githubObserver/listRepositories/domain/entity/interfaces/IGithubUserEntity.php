@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components\entities\interfaces;
+namespace app\githubObserver\listRepositories\domain\entity\interfaces;
 
 interface IGithubUserEntity
 {
@@ -31,7 +31,7 @@ interface IGithubUserEntity
     public function setRepositories(array $repositories): void;
 
     /**
-     * @return  \app\components\entities\interfaces\IGithubUserEntity[]
+     * @return  \app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity[]
      */
     public function getRepositories(): array;
 
