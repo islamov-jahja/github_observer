@@ -16,7 +16,7 @@ class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
         return $newUser->save();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $githubUser = GithubUser::findOne(['id' => $id]);
         if ($githubUser === null) {
@@ -37,7 +37,7 @@ class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
         return $query->exists();
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         return GithubUser::find()->all();
     }

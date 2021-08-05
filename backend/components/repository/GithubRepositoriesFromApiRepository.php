@@ -66,7 +66,7 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
         return false;
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         return [];
     }

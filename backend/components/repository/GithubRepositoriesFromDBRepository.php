@@ -11,10 +11,7 @@ use app\models\GithubRepos;
 
 class GithubRepositoriesFromDBRepository implements IGithubRepositoriesRepository
 {
-    /**
-     * @param IGithubUserEntity|null $user
-     * @return IGithubRepositoryEntity[]
-     */
+
     public function get(?IGithubUserEntity $user): array
     {
         return GithubRepos::find()->limit(10)->all();
@@ -26,19 +23,21 @@ class GithubRepositoriesFromDBRepository implements IGithubRepositoriesRepositor
         unset($githubRepositoryInArray['id']);
 
         $githubRepository = new GithubRepos($githubRepositoryInArray);
+
         return $githubRepository->save();
     }
 
     public function deleteAll(): bool
     {
         $githubRepositories = GithubRepos::find()->all();
-        foreach ($githubRepositories as $githubRepository){
+        foreach ($githubRepositories as $githubRepository) {
             $githubRepository->delete();
         }
+
         return true;
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         return GithubRepos::find()->all();
     }
