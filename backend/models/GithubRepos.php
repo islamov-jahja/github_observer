@@ -68,12 +68,18 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return $this->hasOne(GithubUser::className(), ['id' => 'github_user_id']);
     }
 
+    /**
+     * @return \DateTime
+    */
     public function getUpdatedDateTime(): \DateTime
     {
         return \DateTime::createFromFormat(DateFormat::SERVER_DATE_FORMAT, $this->updated_at);
     }
 
-    public function setUpdateDateTime(\DateTime $updatedDatetime)
+    /**
+     * @param
+     */
+    public function setUpdateDateTime(\DateTime $updatedDatetime): void
     {
         $this->updated_at = $updatedDatetime->format(DateFormat::SERVER_DATE_FORMAT);
     }

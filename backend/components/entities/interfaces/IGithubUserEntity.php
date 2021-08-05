@@ -1,30 +1,49 @@
 <?php
 
-
 namespace app\components\entities\interfaces;
-
-
-use app\components\repository\interfaces\IGithubUserRepository;
 
 interface IGithubUserEntity
 {
+
+    /**
+     * @return int
+     */
     public function getId(): ?int;
-    public function setId(int $id);
 
+    /**
+     * @param  int
+     */
+    public function setId(int $id): void;
+
+    /**
+     * @return string
+     */
     public function getName(): string;
-    public function setName(string $name);
 
     /**
-     * @param IGithubUserRepository[]
-    */
-    public function setRepositories(array $repositories);
+     * @param  string  $name
+     */
+    public function setName(string $name): void;
 
     /**
-     * @return  IGithubUserRepository[]
+     * @param  \app\components\repository\interfaces\IGithubUserRepository[]
+     */
+    public function setRepositories(array $repositories): void;
+
+    /**
+     * @return  \app\components\entities\interfaces\IGithubUserEntity[]
      */
     public function getRepositories(): array;
 
-    public function validate();
-    public function getErrors();
-    public function toArray();
+    public function validate(): void;
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array;
+
+    /**
+     * @return array
+     */
+    public function toArray(): array;
 }
