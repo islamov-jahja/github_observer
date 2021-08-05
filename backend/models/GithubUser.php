@@ -4,18 +4,18 @@ namespace app\models;
 
 use app\components\entities\interfaces\IGithubUserEntity;
 use app\components\repository\GithubRepositoriesFromApiRepository;
-use yii\httpclient\Client;
 
 /**
  * This is the model class for table "github_user".
  *
- * @property int $id Уникальный идентификатор пользователя
- * @property string $name имя пользотвателя
+ * @property int           $id   Уникальный идентификатор пользователя
+ * @property string        $name имя пользотвателя
  *
  * @property GithubRepos[] $githubRepos
  */
 class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
 {
+
     /**
      * {@inheritdoc}
      */
@@ -32,24 +32,32 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
         return [
             [['name'], 'required'],
             [['name'], 'unique', 'message' => 'Такой пользователь уже был добавлен'],
-            [['name'], function($attribute){
-            /**@var $client Client*/
-                $client = \Yii::$container->get(Client::className());
+            [
+                ['name'],
+                function ($attribute) {
+                    /**@var $client Client */
+                    $client = \Yii::$container->get(Client::className());
 
-                $url  = GithubRepositoriesFromApiRepository::GITHUB_API_URL . "/users/{$this->getName()}";
-                try {
-                    $response = $client
-                        ->get($url)
-                        ->addHeaders(['User-Agent' => 'My_computer', 'Authorization' => "token " .\Yii::$app->params['token']])
-                        ->send();
+                    $url = GithubRepositoriesFromApiRepository::GITHUB_API_URL . "/users/{$this->getName()}";
+                    try {
+                        $response = $client
+                            ->get($url)
+                            ->addHeaders(
+                                [
+                                    'User-Agent'    => 'My_computer',
+                                    'Authorization' => "token " . \Yii::$app->params['token'],
+                                ]
+                            )
+                            ->send();
 
-                    if ($response->getStatusCode() != 200) {
-                        $this->addError($attribute, 'Данного пользователя Github не сущесвует');
+                        if ($response->getStatusCode() != 200) {
+                            $this->addError($attribute, 'Данного пользователя Github не сущесвует');
+                        }
+                    } catch (\Exception $exception) {
+                        $this->addError($attribute, 'Некоррктные данные');
                     }
-                }catch (\Exception $exception){
-                    $this->addError($attribute, 'Некоррктные данные');
-                }
-            }],
+                },
+            ],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -60,19 +68,14 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'   => 'ID',
             'name' => 'Name',
         ];
     }
 
-    /**
-     * Gets query for [[GithubRepos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getGithubRepos()
     {
-        return $this->hasMany(GithubRepos::className(), ['github_user_id' => 'id']);
+        return $this->hasMany(GithubRepos::class, ['github_user_id' => 'id']);
     }
 
     public function getId(): ?int
@@ -80,7 +83,7 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -90,12 +93,12 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
         return $this->name;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function setRepositories(array $repositories)
+    public function setRepositories(array $repositories): void
     {
         $this->githubRepos = $repositories;
     }
