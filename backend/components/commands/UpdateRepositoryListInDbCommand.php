@@ -7,7 +7,7 @@ use app\components\repository\GithubRepositoriesFromApiRepository;
 use app\components\repository\GithubRepositoriesFromDBRepository;
 use app\components\repository\interfaces\IGithubRepositoriesRepository;
 use app\components\repository\interfaces\IGithubUserRepository;
-use app\enums\DateFormat;
+use app\githubObserver\common\enums\DateFormat;
 use app\models\GithubRepos;
 
 class UpdateRepositoryListInDbCommand implements IUpdateRepositoryListCommand

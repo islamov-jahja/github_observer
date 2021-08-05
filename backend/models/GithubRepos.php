@@ -4,7 +4,7 @@ namespace app\models;
 
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
-use app\enums\DateFormat;
+use app\githubObserver\common\enums\DateFormat;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
