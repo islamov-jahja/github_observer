@@ -4,6 +4,9 @@ namespace app\models;
 
 use app\components\entities\interfaces\IGithubUserEntity;
 use app\components\repository\GithubRepositoriesFromApiRepository;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+use yii\httpclient\Client;
 
 /**
  * This is the model class for table "github_user".
@@ -13,21 +16,21 @@ use app\components\repository\GithubRepositoriesFromApiRepository;
  *
  * @property GithubRepos[] $githubRepos
  */
-class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
+class GithubUser extends ActiveRecord implements IGithubUserEntity
 {
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'github_user';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name'], 'required'],
@@ -35,8 +38,8 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
             [
                 ['name'],
                 function ($attribute) {
-                    /**@var $client Client */
-                    $client = \Yii::$container->get(Client::className());
+                    /** @var $client \yii\httpclient\Client */
+                    $client = \Yii::$container->get(Client::class);
 
                     $url = GithubRepositoriesFromApiRepository::GITHUB_API_URL . "/users/{$this->getName()}";
                     try {
@@ -63,9 +66,9 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id'   => 'ID',
@@ -73,7 +76,10 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
         ];
     }
 
-    public function getGithubRepos()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGithubRepos(): ActiveQuery
     {
         return $this->hasMany(GithubRepos::class, ['github_user_id' => 'id']);
     }
@@ -106,5 +112,10 @@ class GithubUser extends \yii\db\ActiveRecord implements IGithubUserEntity
     public function getRepositories(): array
     {
         return $this->githubRepos;
+    }
+
+    public function toArray(): array
+    {
+        return [];
     }
 }

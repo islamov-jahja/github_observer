@@ -55,12 +55,12 @@ interface IGithubRepositoryEntity
      */
     public function setLink(string $link): void;
 
-    public function validate(): void;
+    public function validate();
 
     /**
      * @return array
      */
-    public function getErrors(): array;
+    public function getErrors();
 
     /**
      * @return array

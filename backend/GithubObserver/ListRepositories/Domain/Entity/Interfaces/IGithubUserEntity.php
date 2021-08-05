@@ -35,12 +35,12 @@ interface IGithubUserEntity
      */
     public function getRepositories(): array;
 
-    public function validate(): void;
+    public function validate();
 
     /**
      * @return array
      */
-    public function getErrors(): array;
+    public function getErrors();
 
     /**
      * @return array

@@ -2,83 +2,83 @@
 
 namespace app\models;
 
-use app\components\commands\interfaces\IUpdateRepositoryListCommand;
 use app\components\entities\interfaces\IGithubRepositoryEntity;
 use app\components\entities\interfaces\IGithubUserEntity;
 use app\enums\DateFormat;
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "github_repos".
  *
- * @property int $id Уникальный идентификатор репозитория
- * @property int|null $github_user_id ссылка на пользователя
- * @property string|null $name название репозитория
- * @property string $link;
- * @property string $updated_at последняя дата обновления
+ * @property int         $id             Уникальный идентификатор репозитория
+ * @property int|null    $github_user_id ссылка на пользователя
+ * @property string|null $name           название репозитория
+ * @property string      $link           ;
+ * @property string      $updated_at     последняя дата обновления
  *
- * @property GithubUser $githubUser
+ * @property GithubUser  $githubUser
  */
-class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntity
+class GithubRepos extends ActiveRecord implements IGithubRepositoryEntity
 {
-    public IUpdateRepositoryListCommand $updateRepositoryListCommand;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'github_repos';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['github_user_id'], 'integer'],
             [['updated_at'], 'safe'],
             [['name', 'link'], 'string', 'max' => 255],
-            [['github_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => GithubUser::className(), 'targetAttribute' => ['github_user_id' => 'id']],
+            [
+                ['github_user_id'],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => GithubUser::className(),
+                'targetAttribute' => ['github_user_id' => 'id'],
+            ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
-            'id' => 'ID',
+            'id'             => 'ID',
             'github_user_id' => 'Github User ID',
-            'name' => 'Name',
-            'updated_at' => 'Updated At',
-            'link' => 'Ссылка на репозиторий'
+            'name'           => 'Name',
+            'updated_at'     => 'Updated At',
+            'link'           => 'Ссылка на репозиторий',
         ];
     }
 
     /**
-     * Gets query for [[GithubUser]].
-     *
      * @return \yii\db\ActiveQuery
      */
-    public function getGithubUser()
+    public function getGithubUser(): ActiveQuery
     {
         return $this->hasOne(GithubUser::className(), ['id' => 'github_user_id']);
     }
 
     /**
      * @return \DateTime
-    */
+     */
     public function getUpdatedDateTime(): \DateTime
     {
         return \DateTime::createFromFormat(DateFormat::SERVER_DATE_FORMAT, $this->updated_at);
     }
 
-    /**
-     * @param
-     */
     public function setUpdateDateTime(\DateTime $updatedDatetime): void
     {
         $this->updated_at = $updatedDatetime->format(DateFormat::SERVER_DATE_FORMAT);
@@ -89,7 +89,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -99,7 +99,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return $this->name;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -109,7 +109,7 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return $this->githubUser;
     }
 
-    public function setGithubUserEntity(IGithubUserEntity $githubUserRepository)
+    public function setGithubUserEntity(IGithubUserEntity $githubUserRepository): void
     {
         $this->githubUser = $githubUserRepository;
     }
@@ -119,8 +119,13 @@ class GithubRepos extends \yii\db\ActiveRecord implements IGithubRepositoryEntit
         return $this->link;
     }
 
-    public function setLink(string $link)
+    public function setLink(string $link): void
     {
         $this->link = $link;
+    }
+
+    public function toArray(): array
+    {
+        return [];
     }
 }

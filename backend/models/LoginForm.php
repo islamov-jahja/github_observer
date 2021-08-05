@@ -21,16 +21,13 @@ class LoginForm extends Model
 
 
     /**
-     * @return array the validation rules.
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
