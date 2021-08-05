@@ -28,11 +28,10 @@ final class Command
         GithubRepositoriesFromApiRepository $apiRepositoriesRepository,
         GithubRepositoriesFromDBRepository $dbRepositoriesRepository,
         IGithubUserRepository $githubUserRepository
-    )
-    {
+    ) {
         $this->apiRepositoriesRepository = $apiRepositoriesRepository;
-        $this->dbRepositoriesRepository = $dbRepositoriesRepository;
-        $this->githubUserRepository = $githubUserRepository;
+        $this->dbRepositoriesRepository  = $dbRepositoriesRepository;
+        $this->githubUserRepository      = $githubUserRepository;
     }
 
     public function __invoke(): void
@@ -44,25 +43,29 @@ final class Command
 
         foreach ($users as $user) {
             $newRepositories = $this->apiRepositoriesRepository->get($user);
-            if (!empty($newRepositories)) {
+
+            if (! empty($newRepositories)) {
                 $repositories = array_merge($repositories, $newRepositories);
             }
         }
 
         $transaction = \Yii::$app->db->beginTransaction();
 
-        usort($repositories, function(GithubRepos $a, GithubRepos $b){
+        usort($repositories, function (GithubRepos $a, GithubRepos $b) {
             if ($a->getUpdatedDateTime() == $b->getUpdatedDateTime()) {
                 return 0;
             }
+
             return ($a->getUpdatedDateTime() < $b->getUpdatedDateTime()) ? 1 : -1;
         });
 
         $saved = true;
-        if (!empty($repositories)) {
+
+        if (! empty($repositories)) {
             $countOfRepos = count($repositories) > 10 ? 10 : count($repositories);
+
             for ($i = 0; $i < $countOfRepos; $i++) {
-                if (!$this->dbRepositoriesRepository->save($repositories[$i])){
+                if (! $this->dbRepositoriesRepository->save($repositories[$i])) {
                     $saved = false;
                     break;
                 }
@@ -71,6 +74,6 @@ final class Command
             $this->dbRepositoriesRepository->deleteAll();
         }
 
-        !$saved ? $transaction->rollBack() : $transaction->commit();
+        ! $saved ? $transaction->rollBack() : $transaction->commit();
     }
 }
