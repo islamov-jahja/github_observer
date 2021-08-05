@@ -113,9 +113,4 @@ class GithubUser extends ActiveRecord implements IGithubUserEntity
     {
         return $this->githubRepos;
     }
-
-    public function toArray(): array
-    {
-        return [];
-    }
 }

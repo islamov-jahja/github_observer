@@ -25,12 +25,6 @@ class GithubRepositoriesFromApiRepository implements IGithubRepositoriesReposito
         $this->client = $client;
     }
 
-    /**
-     * @param  IGithubUserEntity|null  $user
-     *
-     * @return GithubRepos[]
-     * @throws \yii\httpclient\Exception
-     */
     public function get(?IGithubUserEntity $user): array
     {
         $repositories = [];

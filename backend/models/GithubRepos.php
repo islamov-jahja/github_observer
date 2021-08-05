@@ -123,9 +123,4 @@ class GithubRepos extends ActiveRecord implements IGithubRepositoryEntity
     {
         $this->link = $link;
     }
-
-    public function toArray(): array
-    {
-        return [];
-    }
 }

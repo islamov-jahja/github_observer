@@ -20,6 +20,7 @@ class GithubRepositoriesFromDBRepository implements IGithubRepositoriesRepositor
     public function save(IGithubRepositoryEntity $githubRepositoryEntity): bool
     {
         $githubRepositoryInArray = $githubRepositoryEntity->toArray();
+
         unset($githubRepositoryInArray['id']);
 
         $githubRepository = new GithubRepos($githubRepositoryInArray);
@@ -30,6 +31,7 @@ class GithubRepositoriesFromDBRepository implements IGithubRepositoriesRepositor
     public function deleteAll(): bool
     {
         $githubRepositories = GithubRepos::find()->all();
+
         foreach ($githubRepositories as $githubRepository) {
             $githubRepository->delete();
         }

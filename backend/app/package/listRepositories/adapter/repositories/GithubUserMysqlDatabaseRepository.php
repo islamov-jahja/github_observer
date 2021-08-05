@@ -11,6 +11,7 @@ class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
     public function save(IGithubUserEntity $githubUserEntity): bool
     {
         $userInArray = $githubUserEntity->toArray();
+
         unset($userInArray['id']);
         $newUser = new GithubUser($userInArray);
         return $newUser->save();
