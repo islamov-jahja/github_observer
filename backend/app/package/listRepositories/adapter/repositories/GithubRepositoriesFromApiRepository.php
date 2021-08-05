@@ -6,7 +6,7 @@ use app\githubObserver\common\enums\DateFormat;
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubRepositoryEntity;
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubRepositoriesRepository;
-use app\models\GithubRepos;
+use app\app\package\listRepositories\adapter\entity\GithubRepos;
 use yii\httpclient\Client;
 
 class GithubRepositoriesFromApiRepository implements IGithubRepositoriesRepository

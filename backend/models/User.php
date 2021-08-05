@@ -1,8 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\app\package\listRepositories\adapter\entity;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use yii\base\BaseObject;
+use yii\web\IdentityInterface;
+
+class User extends BaseObject implements IdentityInterface
 {
     public $id;
     public $username;

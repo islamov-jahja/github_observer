@@ -1,12 +1,8 @@
 <?php
 
-
 namespace app\controllers;
 
-
-use app\components\repository\interfaces\IGithubRepositoriesRepository;
 use app\components\services\interfaces\IRepositoriesProcessor;
-use yii\base\BaseObject;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 

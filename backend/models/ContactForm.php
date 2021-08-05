@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\app\package\listRepositories\adapter\entity;
 
 use Yii;
 use yii\base\Model;

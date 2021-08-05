@@ -3,7 +3,7 @@
 namespace app\components\repository;
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\interfaces\IGithubUserRepository;
-use app\models\GithubUser;
+use app\app\package\listRepositories\adapter\entity\GithubUser;
 
 class GithubUserMysqlDatabaseRepository implements IGithubUserRepository
 {

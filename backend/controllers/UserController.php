@@ -5,8 +5,8 @@ namespace app\controllers;
 
 
 use app\components\repository\interfaces\IGithubUserRepository;
-use app\models\GithubUser;
-use app\models\User;
+use app\app\package\listRepositories\adapter\entity\GithubUser;
+use app\app\package\listRepositories\adapter\entity\User;
 use app\components\services\interfaces\IGithubUserProcessor;
 use yii\base\BaseObject;
 use yii\data\ArrayDataProvider;

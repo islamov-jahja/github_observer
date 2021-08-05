@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\app\package\listRepositories\adapter\entity;
 
 use app\githubObserver\listRepositories\domain\entity\interfaces\IGithubUserEntity;
 use app\components\repository\GithubRepositoriesFromApiRepository;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\GithubUser */
+/* @var $model \app\app\package\listRepositories\adapter\entity\GithubUser */
 
 $this->title = 'Добавить пользователя';
 $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];

@@ -2,7 +2,7 @@
 
 namespace tests\unit\models;
 
-use app\models\User;
+use app\app\package\listRepositories\adapter\entity\User;
 
 class UserTest extends \Codeception\Test\Unit
 {
